@@ -138,5 +138,11 @@ public class ImmutableArrayListTest {
         assertArrayEquals(a.toArray(), new Object[] {1,2,3});
     }
 
+    @Test
+    public void testToStringMethod() {
+        ImmutableArrayList a = new ImmutableArrayList(new Object[] {1,2,3});
+        assertEquals(a.toString(), "1, 2, 3");
+    }
+
 
 }

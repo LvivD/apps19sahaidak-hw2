@@ -27,7 +27,8 @@ public class ImmutableArrayList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList add(int index, Object e) throws IndexOutOfBoundsException {
+    public ImmutableList add(int index, Object e)
+            throws IndexOutOfBoundsException {
         indexCheck(index);
         Object[] newList = Arrays.copyOf(this.elements,
                 this.elements.length + 1);
@@ -52,21 +53,21 @@ public class ImmutableArrayList implements ImmutableList {
         for (int i = index; i < c.length + index; i++) {
             newList[i] = c[i - index];
         }
-        for (int i = c.length + index; i < c.length +
-                this.elements.length; i++) {
+        for (int i = c.length + index;
+             i < c.length + this.elements.length; i++) {
             newList[i] = this.elements[i - c.length];
         }
         return new ImmutableArrayList(newList);
     }
 
     @Override
-    public Object get(int index) throws IndexOutOfBoundsException{
+    public Object get(int index) throws IndexOutOfBoundsException {
         indexCheck(index);
         return this.elements[index];
     }
 
     @Override
-    public ImmutableList remove(int index) throws IndexOutOfBoundsException{
+    public ImmutableList remove(int index) throws IndexOutOfBoundsException {
         indexCheck(index);
         Object[] newList = Arrays.copyOf(this.elements,
                 this.elements.length - 1);
@@ -78,7 +79,7 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableList set(int index, Object e)
-            throws IndexOutOfBoundsException{
+            throws IndexOutOfBoundsException {
         indexCheck(index);
         Object[] newList = Arrays.copyOf(this.elements, this.elements.length);
         newList[index] = e;
@@ -117,17 +118,15 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public String toString() {
-        String resString = "";
+        StringBuffer buf = new StringBuffer();
         for (int i = 0; i < this.elements.length; i++) {
 
-
+            buf.append(String.valueOf(this.elements[i]));
             if (i != this.elements.length-1) {
-                resString += String.valueOf(this.elements[i]) + ", ";
+                buf.append(", ");
             }
-            else {
-                resString += String.valueOf(this.elements[i]);
-            }
+
         }
-        return resString;
+        return buf.toString();
     }
 }
