@@ -22,12 +22,12 @@ public class ImmutableArrayList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList add(Object e) {
+    public ImmutableArrayList add(Object e) {
         return this.add(this.elements.length, e);
     }
 
     @Override
-    public ImmutableList add(int index, Object e)
+    public ImmutableArrayList add(int index, Object e)
             throws IndexOutOfBoundsException {
         indexCheck(index);
         Object[] newList = Arrays.copyOf(this.elements,
@@ -40,12 +40,12 @@ public class ImmutableArrayList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList addAll(Object[] c) {
+    public ImmutableArrayList addAll(Object[] c) {
         return this.addAll(this.elements.length, c);
     }
 
     @Override
-    public ImmutableList addAll(int index, Object[] c)
+    public ImmutableArrayList addAll(int index, Object[] c)
             throws IndexOutOfBoundsException {
         indexCheck(index);
         Object[] newList = Arrays.copyOf(this.elements,
@@ -67,7 +67,7 @@ public class ImmutableArrayList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList remove(int index) throws IndexOutOfBoundsException {
+    public ImmutableArrayList remove(int index) throws IndexOutOfBoundsException {
         indexCheck(index);
         Object[] newList = Arrays.copyOf(this.elements,
                 this.elements.length - 1);
@@ -78,7 +78,7 @@ public class ImmutableArrayList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList set(int index, Object e)
+    public ImmutableArrayList set(int index, Object e)
             throws IndexOutOfBoundsException {
         indexCheck(index);
         Object[] newList = Arrays.copyOf(this.elements, this.elements.length);
@@ -102,7 +102,7 @@ public class ImmutableArrayList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList clear() {
+    public ImmutableArrayList clear() {
         return new ImmutableArrayList();
     }
 
