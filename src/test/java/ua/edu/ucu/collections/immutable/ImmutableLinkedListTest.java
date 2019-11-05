@@ -234,10 +234,24 @@ public class ImmutableLinkedListTest {
     }
 
     @Test
+    public void testRemoveFirstEmpty() {
+        ImmutableLinkedList a = new ImmutableLinkedList();
+        ImmutableLinkedList b = a.removeFirst();
+        assertEquals("", b.toString());
+    }
+
+    @Test
     public void testRemoveLast() {
         ImmutableLinkedList a = new ImmutableLinkedList().addAll(new Object[] {1,2,3,4,5,6});
         ImmutableLinkedList b = a.remove(5);
         assertEquals("1, 2, 3, 4, 5", b.toString());
+    }
+
+    @Test
+    public void testRemoveLastEmpty() {
+        ImmutableLinkedList a = new ImmutableLinkedList();
+        ImmutableLinkedList b = a.removeLast();
+        assertEquals("", b.toString());
     }
 
     @Test

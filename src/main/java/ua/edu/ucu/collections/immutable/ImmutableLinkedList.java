@@ -170,17 +170,27 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     public ImmutableLinkedList removeFirst() {
-        Node[] newHeadAndTail = this.copyAll();
-        newHeadAndTail[0].getNext().setPrev(null);
-        return new ImmutableLinkedList(newHeadAndTail[0].getNext(),
-                newHeadAndTail[1]);
+        if (this.isEmpty()) {
+            return new ImmutableLinkedList();
+        }
+        else {
+            Node[] newHeadAndTail = this.copyAll();
+            newHeadAndTail[0].getNext().setPrev(null);
+            return new ImmutableLinkedList(newHeadAndTail[0].getNext(),
+                    newHeadAndTail[1]);
+        }
     }
 
     public ImmutableLinkedList removeLast() {
-        Node[] newHeadAndTail = this.copyAll();
-        newHeadAndTail[1].getPrev().setNext(null);
-        return new ImmutableLinkedList(newHeadAndTail[0],
-                newHeadAndTail[1].getPrev());
+        if (this.isEmpty()) {
+            return new ImmutableLinkedList();
+        }
+        else {
+            Node[] newHeadAndTail = this.copyAll();
+            newHeadAndTail[1].getPrev().setNext(null);
+            return new ImmutableLinkedList(newHeadAndTail[0],
+                    newHeadAndTail[1].getPrev());
+        }
     }
 
     @Override
@@ -260,7 +270,8 @@ public class ImmutableLinkedList implements ImmutableList {
                 prevNode.addNext(elem);
                 prevNode = prevNode.getNext();
             }
-            return new ImmutableLinkedList(newHeadAndTail[0], newHeadAndTail[1]);
+            return new ImmutableLinkedList(newHeadAndTail[0],
+                    newHeadAndTail[1]);
         }
     }
 
