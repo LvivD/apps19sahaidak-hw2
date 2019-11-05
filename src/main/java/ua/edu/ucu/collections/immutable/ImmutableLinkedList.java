@@ -44,8 +44,8 @@ public class ImmutableLinkedList implements ImmutableList {
             this.prev = prevNode;
         }
 
-        private Node copyNextNull() {
-            return new Node(this.elem, this.next, this.prev);
+        private Node copyNode() {
+            return new Node(this.elem, null, null);
         }
 
         private void addNext(Object newElem) {
@@ -58,21 +58,25 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     private final Node head;
+    private final Node tail;
     private final int size;
 
     public ImmutableLinkedList(Object elem) {
         Node nod = new Node(elem);
         this.head = nod;
+        this.tail = nod;
         this.size = 1;
     }
 
     public ImmutableLinkedList() {
         this.head = null;
+        this.tail = null;
         this.size = 0;
     }
 
     public ImmutableLinkedList(Node head, Node tail) {
         this.head = head;
+        this.tail = tail;
         Node nod = head;
         int i = 1;
         while (nod.getNext() != null) {
@@ -108,14 +112,18 @@ public class ImmutableLinkedList implements ImmutableList {
         if (this.head == null) {
             return new Node[] {null, null};
         }
-        Node newHead = this.head.copyNextNull();
+        Node newHead = this.head.copyNode();
         Node iterNode = this.head;
+        Node prevNode = null;
         Node iterNodeNew = newHead;
         while (iterNode.getNext() != null) {
-            iterNodeNew.setNext(iterNode.getNext().copyNextNull());
+            iterNodeNew.setNext(iterNode.getNext().copyNode());
+            iterNodeNew.setPrev(prevNode);
+            prevNode = iterNodeNew;
             iterNodeNew = iterNodeNew.getNext();
             iterNode = iterNode.getNext();
         }
+        iterNodeNew.setPrev(prevNode);
         return new Node[] {newHead, iterNodeNew};
     }
 
@@ -141,6 +149,38 @@ public class ImmutableLinkedList implements ImmutableList {
             return new ImmutableLinkedList(newHeadAndTail[0],
                     newHeadAndTail[1].getNext());
         }
+    }
+
+    public Object getFirst() {
+        if (this.isEmpty()) {
+            return null;
+        }
+        else {
+            return this.head.getElem();
+        }
+    }
+
+    public Object getLast() {
+        if (this.isEmpty()) {
+            return null;
+        }
+        else {
+            return this.tail.getElem();
+        }
+    }
+
+    public ImmutableLinkedList removeFirst() {
+        Node[] newHeadAndTail = this.copyAll();
+        newHeadAndTail[0].getNext().setPrev(null);
+        return new ImmutableLinkedList(newHeadAndTail[0].getNext(),
+                newHeadAndTail[1]);
+    }
+
+    public ImmutableLinkedList removeLast() {
+        Node[] newHeadAndTail = this.copyAll();
+        newHeadAndTail[1].getPrev().setNext(null);
+        return new ImmutableLinkedList(newHeadAndTail[0],
+                newHeadAndTail[1].getPrev());
     }
 
     @Override
@@ -220,8 +260,7 @@ public class ImmutableLinkedList implements ImmutableList {
                 prevNode.addNext(elem);
                 prevNode = prevNode.getNext();
             }
-            return new ImmutableLinkedList(newHeadAndTail[0],
-                    newHeadAndTail[1]);
+            return new ImmutableLinkedList(newHeadAndTail[0], newHeadAndTail[1]);
         }
     }
 
@@ -236,10 +275,10 @@ public class ImmutableLinkedList implements ImmutableList {
             throws IndexOutOfBoundsException {
         indexCheck(index);
         if (index == 0) {
-            Node[] newHeadAndTail = this.copyAll();
-            newHeadAndTail[0].getNext().setPrev(null);
-            return new ImmutableLinkedList(newHeadAndTail[0].getNext(),
-                    newHeadAndTail[1]);
+            return this.removeFirst();
+        }
+        else if (index == this.size - 1) {
+            return this.removeLast();
         }
         Node[] newHeadAndTail = this.copyAll();
         Node prevToRemove = goTo(index - 1, newHeadAndTail[0]);
