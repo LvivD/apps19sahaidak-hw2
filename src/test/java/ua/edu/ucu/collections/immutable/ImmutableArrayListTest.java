@@ -78,6 +78,18 @@ public class ImmutableArrayListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
+    public void testRemoveMethodMinusOne() {
+        ImmutableArrayList a = new ImmutableArrayList(new Object[] {1,2,3});
+        ImmutableList b = a.remove(-1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testRemoveMethodLastLast() {
+        ImmutableArrayList a = new ImmutableArrayList(new Object[] {1,2,3});
+        ImmutableList b = a.remove(3);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testSetMethodException() {
         ImmutableArrayList a = new ImmutableArrayList(new Object[] {1,2,3});
         Object elem = a.set(7, 100);

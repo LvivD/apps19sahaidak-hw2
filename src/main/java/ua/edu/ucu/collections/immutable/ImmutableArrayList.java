@@ -16,6 +16,13 @@ public class ImmutableArrayList implements ImmutableList {
 
     private void indexCheck(int index)
             throws IndexOutOfBoundsException {
+        if (index > this.elements.length - 1 || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+    private void indexCheckPlusOne(int index)
+            throws IndexOutOfBoundsException {
         if (index > this.elements.length || index < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -29,7 +36,7 @@ public class ImmutableArrayList implements ImmutableList {
     @Override
     public ImmutableArrayList add(int index, Object e)
             throws IndexOutOfBoundsException {
-        indexCheck(index);
+        indexCheckPlusOne(index);
         Object[] newList = Arrays.copyOf(this.elements,
                 this.elements.length + 1);
         newList[index] = e;
@@ -47,7 +54,7 @@ public class ImmutableArrayList implements ImmutableList {
     @Override
     public ImmutableArrayList addAll(int index, Object[] c)
             throws IndexOutOfBoundsException {
-        indexCheck(index);
+        indexCheckPlusOne(index);
         Object[] newList = Arrays.copyOf(this.elements,
                 this.elements.length + c.length);
         for (int i = index; i < c.length + index; i++) {
@@ -67,7 +74,8 @@ public class ImmutableArrayList implements ImmutableList {
     }
 
     @Override
-    public ImmutableArrayList remove(int index) throws IndexOutOfBoundsException {
+    public ImmutableArrayList remove(int index)
+            throws IndexOutOfBoundsException {
         indexCheck(index);
         Object[] newList = Arrays.copyOf(this.elements,
                 this.elements.length - 1);
