@@ -48,8 +48,8 @@ public class ImmutableLinkedList implements ImmutableList {
             return new Node(this.elem, this.next, this.prev);
         }
 
-        private void addNext(Object elem) {
-            Node newNode = new Node(elem, this.getNext(), this);
+        private void addNext(Object newElem) {
+            Node newNode = new Node(newElem, this.getNext(), this);
             this.setNext(newNode);
             if (this.getNext() != null) {
                 this.getNext().setPrev(newNode);
@@ -58,25 +58,21 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     private final Node head;
-    private final Node tail;
     private final int size;
 
     public ImmutableLinkedList(Object elem) {
         Node nod = new Node(elem);
         this.head = nod;
-        this.tail = nod;
         this.size = 1;
     }
 
     public ImmutableLinkedList() {
         this.head = null;
-        this.tail = null;
         this.size = 0;
     }
 
     public ImmutableLinkedList(Node head, Node tail) {
         this.head = head;
-        this.tail = tail;
         Node nod = head;
         int i = 1;
         while (nod.getNext() != null) {
@@ -101,10 +97,11 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     private Node goTo(int index, Node nod) {
+        Node newNode = nod;
         for (int i = 0; i < index; i++) {
-            nod = nod.getNext();
+            newNode = newNode.getNext();
         }
-        return nod;
+        return newNode;
     }
 
     private Node[] copyAll() {
@@ -223,7 +220,8 @@ public class ImmutableLinkedList implements ImmutableList {
                 prevNode.addNext(elem);
                 prevNode = prevNode.getNext();
             }
-            return new ImmutableLinkedList(newHeadAndTail[0], newHeadAndTail[1]);
+            return new ImmutableLinkedList(newHeadAndTail[0],
+                    newHeadAndTail[1]);
         }
     }
 
