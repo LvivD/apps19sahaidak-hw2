@@ -313,7 +313,7 @@ public class ImmutableLinkedList implements ImmutableList {
         int i = 0;
         Node indexNode = this.head;
         while (indexNode != null) {
-            if (indexNode.getElem() == e) {
+            if (indexNode.getElem().equals(e)) {
                 return i;
             }
             indexNode = indexNode.getNext();
